@@ -1,0 +1,188 @@
+<script setup>
+definePageMeta({
+  layout: "backend",
+  middleware: ["auth"],
+});
+
+const { $categoryStore } = useNuxtApp();
+const { $useMoveToTrash } = useNuxtApp();
+const { $usePublicItem } = useNuxtApp();
+const { $useMoveToDraft } = useNuxtApp();
+const { $useChangeAuthor } = useNuxtApp();
+const { $userStore } = useNuxtApp();
+const { $paginateStore } = useNuxtApp();
+const { $toast } = useNuxtApp();
+
+const routePath = useRoute().path;
+
+const title = ref("Danh mục");
+const buttonName = ref("Thêm danh mục");
+const buttonClass = ref("btn-success");
+const url = ref("/admin/category/create");
+const userID = $userStore.user.id;
+const isAdmin = $userStore.user.role.split(",").includes("is_admin");
+const moduleName = "category";
+const enableCheckbox = false;
+
+let listAll = ref([]);
+let listPagination = ref([]);
+let listSearch = ref([]);
+let listItem = ref([]);
+let listUser = ref([]);
+let countList = ref(0);
+let countPublic = ref(0);
+let countDraft = ref(0);
+let countTrash = ref(0);
+let countMyItem = ref(0);
+
+onMounted(async () => {
+  await $categoryStore.getList();
+  await $userStore.getListUser();
+
+  listAll.value = $categoryStore.list;
+  listUser.value = useGetListUserRole($userStore.listUser);
+
+  // getListPagination($paginateStore.pageCurrent);
+  listPagination.value = listAll.value.slice(
+    ($paginateStore.currentPage - 1) * $paginateStore.itemPerPage,
+    ($paginateStore.currentPage - 1) * $paginateStore.itemPerPage +
+      $paginateStore.itemPerPage
+  );
+  $paginateStore.setTotalPage(
+    Math.ceil(useCountAllItem(listAll) / $paginateStore.itemPerPage)
+  );
+  
+  listItem.value = listPagination.value;
+
+  countList.value = useCountAllItem(listAll);
+  countPublic.value = useCountPublicItem(listAll);
+  countDraft.value = useCountDraftItem(listAll);
+  countMyItem.value = useCountMyItem(listAll, $userStore);
+  countTrash.value = useCountTrashItem(listAll);;
+});
+
+let count = ref({
+  countList: countList,
+  countPublic: countPublic,
+  countDraft: countDraft,
+  countMyItem: countMyItem,
+  countTrash: countTrash,
+});
+
+const getListPagination = (page) => {
+  $paginateStore.setCurrentPage(page);
+  
+  listPagination.value = listAll.value.slice(
+    ($paginateStore.currentPage - 1) * $paginateStore.itemPerPage,
+    ($paginateStore.currentPage - 1) * $paginateStore.itemPerPage +
+      $paginateStore.itemPerPage
+  );
+  listItem.value = listPagination.value
+};
+
+const updatePerPage = (perPageUpdate) => {
+  $paginateStore.setCurrentPage(1)
+  $paginateStore.setItemPerPage(Number(perPageUpdate))
+  $paginateStore.setTotalPage(Math.ceil(useCountAllItem(listAll) / $paginateStore.itemPerPage));
+  listPagination.value = listAll.value.slice(
+    ($paginateStore.currentPage - 1) * $paginateStore.itemPerPage,
+    ($paginateStore.currentPage - 1) * $paginateStore.itemPerPage + $paginateStore.itemPerPage
+  );
+  listItem.value = listPagination.value
+};
+
+const useGetSearchValue = (keyword) => {
+  // console.log("keyword in index category: ", keyword);
+  if (keyword == "") {
+    listSearch.value = listAll.value.slice(
+      ($paginateStore.pageCurrent - 1) * $paginateStore.perPage,
+      ($paginateStore.pageCurrent - 1) * $paginateStore.perPage +
+        $paginateStore.perPage
+    );
+  } else {
+    $paginateStore.setPageCurrent(1);
+    listSearch.value = listAll.value.filter((item) => {
+      return item.name.toUpperCase().includes(keyword.toUpperCase());
+    });
+
+    console.log(
+      "func 'useGetSearchValue' listSearch.value: ",
+      listSearch.value
+    );
+  }
+};
+
+const usePublicItem = async (id) => {
+  await $usePublicItem(id, $categoryStore, $toast);
+  await $categoryStore.getList();
+  listAll.value = $categoryStore.list;
+  listSearch.value = listAll.value.slice(
+    ($paginateStore.pageCurrent - 1) * $paginateStore.perPage,
+    ($paginateStore.pageCurrent - 1) * $paginateStore.perPage +
+      $paginateStore.perPage
+  );
+  countPublic.value = useCountPublicItem(listAll);
+  countDraft.value = useCountDraftItem(listAll);
+};
+
+const useMoveToDraft = async (id) => {
+  await $useMoveToDraft(id, $categoryStore, $toast);
+  await $categoryStore.getList();
+  listAll.value = $categoryStore.list;
+  listSearch.value = listAll.value.slice(
+    ($paginateStore.pageCurrent - 1) * $paginateStore.perPage,
+    ($paginateStore.pageCurrent - 1) * $paginateStore.perPage +
+      $paginateStore.perPage
+  );
+  countPublic.value = useCountPublicItem(list);
+  countDraft.value = useCountDraftItem(list);
+};
+
+const useMoveToTrash = async (id) => {
+  await $useMoveToTrash(id, $categoryStore, $toast);
+  await $categoryStore.getList();
+
+  listAll.value = $categoryStore.list;
+  listSearch.value = listAll.value.slice(
+    ($paginateStore.pageCurrent - 1) * $paginateStore.perPage,
+    ($paginateStore.pageCurrent - 1) * $paginateStore.perPage +
+      $paginateStore.perPage
+  );
+
+  countTrash.value = useCountTrashItem(list);
+  countPublic.value = useCountPublicItem(list);
+  countDraft.value = useCountDraftItem(list);
+};
+
+const useChangeAuthor = async (event, categoryID, isDelete) => {
+  if (isDelete !== null) {
+    $toast.warning("Không thể chỉ định quyền cho bài viết trong thùng rác!");
+    return;
+  }
+  $useChangeAuthor(event, categoryID, $categoryStore, $toast);
+};
+</script>
+
+<template>
+  <TableComp
+    :title="title"
+    :buttonName="buttonName"
+    :buttonClass="buttonClass"
+    :url="url"
+    :moduleName="moduleName"
+    :list="listItem"
+    :listUser="listUser"
+    :count="count"
+    :userID="userID"
+    :routePath="routePath"
+    :isAdmin="isAdmin"
+    :useChangeAuthor="useChangeAuthor"
+    :enableCheckbox="enableCheckbox"
+    :getListPagination="getListPagination"
+    @move-to-draft="useMoveToDraft"
+    @move-to-trash="useMoveToTrash"
+    @public-item="usePublicItem"
+    @update-per-page="updatePerPage"
+    @get-search-value="useGetSearchValue"
+  />
+</template>

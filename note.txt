@@ -1,0 +1,38 @@
+Phân trang
+Reset value inpuserch khi có hành động
+Làm FE
+Quản lý user
+  Cập nhật thông tin cá nhân
+  Kích hoạt email
+  Lấy lại mật khẩu
+Quản lý cho phần FE
+  Logo
+  Banner
+  Hotline
+  Địa chỉ
+  Giờ làm việc
+  Menu
+  Ảnh quảng cáo
+    Ảnh
+    Link
+  Ảnh khuyến mãi
+  Ảnh maps
+    Ảnh
+    Link
+  Footer
+    Logo Footer
+    Text Footer
+  Ảnh review của khách hàng
+    Ảnh
+    Text
+  Copyright
+
+
+
+Thêm hàm setRoleEdit trong categoryStore và 
+  thêm url trong api category
+  thêm hàm cập nhật quyển trong controller Category
+
+Chưa thêm phân trang cho các trang con
+Không nên lưu pageCurrent, pageTotal, itemPerPage vào store
+  
