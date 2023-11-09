@@ -3,7 +3,7 @@ import axios from "axios"
 export default defineNuxtPlugin(nuxtApp => {
 
   axios.defaults.withCredentials = true
-  axios.defaults.baseURL = "http://localhost:8000"
+  axios.defaults.baseURL = "https://api.chamsocmevabe.top"
   // const token = useCookie("XSRF-TOKEN")
   // if (token.value) {
   //   axios.defaults.headers.common['Authorization'] = `Bearer ${token.value}`
