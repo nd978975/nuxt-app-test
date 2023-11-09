@@ -70,10 +70,6 @@ async () => {
   transform: (categoryInfo) => categoryInfo.data
 }
 )
-
-console.log("categoryInfo $fetch: ", categoryInfo);
-
-
 </script>
 
 <template>
