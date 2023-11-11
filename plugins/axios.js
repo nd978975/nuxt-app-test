@@ -5,6 +5,7 @@ export default defineNuxtPlugin(nuxtApp => {
   axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
   axios.defaults.withCredentials = true
   axios.defaults.baseURL = "https://api.chamsocmevabe.top"
+  // axios.defaults.baseURL = "https://api.chamsocmevabe.top"
   // const token = useCookie("XSRF-TOKEN")
   // if (token.value) {
   //   axios.defaults.headers.common['Authorization'] = `Bearer ${token.value}`
