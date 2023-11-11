@@ -6,10 +6,10 @@
     "module": true,
     "resourceType": "script"
   },
-  "D:/My Project/blog-nuxt/node_modules/nuxt/dist/app/entry.js": {
+  "C:/Users/MEOMUN/Downloads/Source code/blog-nuxt/node_modules/nuxt/dist/app/entry.js": {
     "resourceType": "script",
     "module": true,
     "isEntry": true,
-    "file": "D:/My Project/blog-nuxt/node_modules/nuxt/dist/app/entry.js"
+    "file": "C:/Users/MEOMUN/Downloads/Source code/blog-nuxt/node_modules/nuxt/dist/app/entry.js"
   }
 }

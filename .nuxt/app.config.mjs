@@ -1,5 +1,5 @@
 
-import { defuFn } from 'D:/My Project/blog-nuxt/node_modules/defu/dist/defu.mjs'
+import { defuFn } from 'C:/Users/MEOMUN/Downloads/Source code/blog-nuxt/node_modules/defu/dist/defu.mjs'
 
 const inlineConfig = {}
 
