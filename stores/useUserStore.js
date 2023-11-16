@@ -14,6 +14,7 @@ export const useUserStore = defineStore('user', {
       console.log("Get token success!!!")
     },
     async getUser () {
+      await $axios.get("/sanctum/csrf-cookie")
       let res = await $axios.get('/api/user')
       this.$state.user = res.data
     },
