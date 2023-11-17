@@ -4,7 +4,7 @@ export default defineNuxtPlugin(nuxtApp => {
   
   axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
   axios.defaults.withCredentials = true
-  axios.defaults.baseURL = "https://api.dodungchobe.xyz"
+  axios.defaults.baseURL = "https://api.chamsocmevabe.top"
   // axios.defaults.baseURL = "http://localhost:8000"
   // const token = useCookie("XSRF-TOKEN")
   // if (token.value) {
