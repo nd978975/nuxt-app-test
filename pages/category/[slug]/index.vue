@@ -59,7 +59,7 @@ const refreshData = async () => {
 
 const { data: categoryInfo, pending, error, refresh } = await useAsyncData("categoryInfo", 
 async () => {
-  return await $fetch(`https://api.chamsocmevabe.top/danh-muc/detail-by-slug/${route.params.slug}`)
+  return await $fetch(`https://api.dodungchobe.xyz/danh-muc/detail-by-slug/${route.params.slug}`)
   // return await $fetch(`http://localhost:8000/danh-muc/detail-by-slug/${route.params.slug}`)
   // return await $fetch("https://dummyjson.com/products/1")
   // return await $fetch("https://fakestoreapi.com/products/1")
