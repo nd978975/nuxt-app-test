@@ -15,6 +15,4 @@ const { $userStore } = useNuxtApp();
   </div>
   <div v-else><NuxtLink to="/admin/user/profile">Profile</NuxtLink><br /></div>
   <a href="" @click.prevent="$userStore.logout">Logout</a><br />
-  <a href="" @click.prevent="$userStore.getToken()">getToken</a><br />
-  <h3>Ahihihiihihihiihiihi đồ ngốc hhehehehe</h3>
 </template>
