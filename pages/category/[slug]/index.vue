@@ -23,7 +23,7 @@ async () => {
 <template>
   <h1 style="color: rgb(86, 238, 205)">Data to server:</h1>
   <div v-if="categoryInfo">
-    <div v-if="categoryInfo.deleted_at">
+    <div v-if="categoryInfo.deleted_at !== null">
       Danh mục không tồn tại
     </div>
     
