@@ -23,11 +23,14 @@ async () => {
 <template>
   <h1 style="color: rgb(86, 238, 205)">Data to server:</h1>
   <div v-if="categoryInfo">
-    <div v-if="categoryInfo.deleted_at == null">
-      <h2 v-if="categoryInfo">{{ categoryInfo.name }}</h2> 
+    <div v-if="categoryInfo.deleted_at">
+      Danh mục không tồn tại
+    </div>
+    
+    <div v-else>
+      <h2>{{ categoryInfo.name }}</h2>
       <div v-html="categoryInfo.description"></div>
     </div>
-    <div v-else>Danh mục không tồn tại</div>
   </div>
 
   <button @click="refreshData">Refresh</button>
