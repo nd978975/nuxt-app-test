@@ -76,6 +76,9 @@ async () => {
 <template>
   <h1 style="color: rgb(86, 238, 205)">Data to server:</h1>
   <h2 v-if="categoryInfo">{{ categoryInfo.name }}</h2>
+  <div v-if="categoryInfo">
+    <div v-html="categoryInfo.content"></div>
+  </div>
   <h2 v-if="pending">{{ pending }}</h2>
   <h2 v-if="error">{{ error }}</h2>
 
